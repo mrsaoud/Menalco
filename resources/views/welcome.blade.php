@@ -1,12 +1,5 @@
 @extends('layout.app')
 @section('main')
-{{-- <style>
-    .loading{
-    display: none;
-}
-
-</style> --}}
-{{-- <meta name="_token" content="{{ csrf_token() }}"> --}}
 @csrf
 <div class="page-content" id="all">
     <div class="col-md-12 grid-margin stretch-card">
@@ -15,11 +8,8 @@
                 <div class="form-group">
                     <div class="form-group">
                         <label for="exampleInputUsername1">Scanner le code-barres</label>
-                        <input type="text" class="form-control" id="codeBar" autocomplete="off" placeholder="Ex:216821872" value="" maxlength="20">
+                        <input type="text" class="form-control" id="codeBar" autocomplete="off" placeholder="Ex:216821872" value="{{ Session::get('this')}}" maxlength="20">
                     </div>
-                    {{-- <div class="form-group">
-                                <button type="submit" class="btn btn-primary">rechercher</button>
-                            </div> --}}
                 </div>
             </div>
         </div>
@@ -27,26 +17,28 @@
     <div class="row" id="hidden">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-head d-flex p-2">
-                    <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0 button">
-                        <i class="btn-icon-prepend" data-feather="download-cloud"></i>
-                        CSV
-                    </button>
+                <div class="card-head d-flex p-2 justify-content-center">
                 </div>
                 <div class="card-body">
                     <div class="table-responsive pl-2">
                         <table id="dataTableExample" class="table">
                             <thead>
                                 <tr>
-                                    <th>Code Bar</th>
-                                    <th>Designation</th>
-                                    <th>Quantité</th>
+                                    <th class="text-truncate" style="max-width: 50px;">Code Barres</th>
+                                    <th class="text-truncate" style="max-width: 50px;">Designation</th>
+                                    <th class="text-truncate" style="max-width: 50px;">Quantité</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="card-footer d-flex p-2 justify-content-center">
+                    <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0 button">
+                        <i class="btn-icon-prepend" data-feather="download-cloud"></i>
+                        Exporter CSV
+                    </button>
                 </div>
             </div>
         </div>
@@ -67,10 +59,15 @@
 
 
     $(document).ready(function() {
+        $("input#codeBar").focus();
+        $('#codeBar').bind('paste keyup', function(e) {
 
-        $('#codeBar').bind('paste', function(e) {
+            if(e.originalEvent.clipboardData!= null){
+                var pastedData = e.originalEvent.clipboardData.getData('text');
+            }else{
+                var pastedData = $('#codeBar').val();
+            }
 
-            var pastedData = e.originalEvent.clipboardData.getData('text');
             var codeBarLength = pastedData.length;
 
             if (codeBarLength === 20) {
@@ -88,18 +85,11 @@
                     },
                     destroy: true,
                     oLanguage: {
-                        "sSearch": "Code a barees",
-                        "paginate": {
-                        "first": "Première",
-                        "last": "Dernière",
-                        "next": "Suivante",
-                        "previous": "Précédente"
-                    },
-                    "zeroRecords": "Aucune entrée correspondante trouvée",
-                    "infoEmpty": "Affichage de 0 à 0 sur 0 entrées",
+                        "sSearch": "Code à barres",
                     },
                     processing: true,
                     serverSide: false,
+                    bPaginate: false,
                     responsive: true,
                     autoWidth: false,
                     lengthChange: false,
