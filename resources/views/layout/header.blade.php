@@ -25,7 +25,7 @@
         {{-- <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}"> --}}
         <!-- endinject -->
         <!-- End layout styles -->
-        <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+        
         <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-steps/jquery.steps.css') }}">
     </head>
 @endsection

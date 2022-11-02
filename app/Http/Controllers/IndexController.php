@@ -20,7 +20,7 @@ class IndexController extends Controller
     //envoyer le array à datatables (frontedn)
     public function getTable(Request $request)
     {
-        $file = public_path('Inventaire/' . $request->codeBar . '.csv');
+        $file = public_path('Inventaire/' . $request->codeBar);
        if(Session::get($request->codeBar)) {
             $data = Session::get($request->codeBar);
             return  DataTables::of($data)
@@ -33,6 +33,11 @@ class IndexController extends Controller
             //si la session ne contien pas l'information
             $data = $this->importCsv($file);
             Session::put($request->codeBar, $data);
+            return  DataTables::of($data)
+            ->smart(true)
+            ->addIndexColumn()
+            ->setRowId('row-{{$data[19]}}')
+            ->toJson();
             
         } else{
             return back()->with('error', 'Session introvable');
@@ -46,8 +51,12 @@ class IndexController extends Controller
         foreach($array as &$data) {
         
             if ($data[19] == $request->codeBar) {
-               $data[6] +=$request->q;
-               $data[7] ="O";
+               $data[5] +=$request->q;
+               $data[7] ="N";
+            }else if($data[5] == 0){
+                $data[7] ="O";
+            }else{
+                $data[7] ="N";
             }
             
         }
@@ -90,22 +99,61 @@ class IndexController extends Controller
 
     //crée un fichier csv 
     function arrayToCsv(Request $request){
+        
         $i = 0;
-        $handle = fopen('Inventaire/' . $request->session . '.csv', "r");
+        $handle = fopen('Inventaire/' . $request->session, "r");
         $head[] = fgetcsv($handle, 1000, ",");
         $head1[] = fgetcsv($handle, 1, ",");
         $data = Session::get($request->session);
-        $footer[] = [0 => ''];
 
-        $finalExport = array_merge($head,$head1,$data,$footer);
-        //dd($finalExport);
-
-        // EXPORT CSV
-        $fp = fopen('Inventaire/tamporary.csv', 'w');    
-        foreach ($finalExport as $rows) {
-            fputcsv($fp, $rows , ",",'"',true);
-        }    
-        fclose($fp);
+        $finalExport = array_merge($head,$head1,$data);
+        $text = "";
+        $j = 0;
+        foreach ($finalExport as $fields) {
+            if ($j < 2) {
+                $numItems = count($fields);
+                $i = 0;
+                foreach ($fields as $value) {
+                    if (++$i === $numItems) {
+                        $text .= '"' . $value . '"';
+                    } else {
+                        if ($value == "1") {
+                            $text .= '"' . $value . '",';
+                        } else if (is_numeric($value)) {
+                            $text .= $value . ",";
+                        } else {
+                            $text .= '"' . $value . '",';
+                        }
+                    }
+                }
+                $text .= "\n";
+            } else {
+                $numItems = count($fields);
+                $i = 0;
+                foreach ($fields as $value) {
+                    if (++$i === $numItems) {
+                        $text .= '"' . $value . '"';
+                    } else {
+                        if (is_numeric($value)) {
+                            $text .= $value . ",";
+                        } else {
+                            $text .= '"' . $value . '",';
+                        }
+                    }
+                }
+                $text .= "\n";
+            }
+            $j++;
+        }
+        
+        $fh = fopen('Inventaire/'.$request->session, 'w'); 
+        //$fh = fopen("fullfiled/" . $filename, "w") or die("Could not open log file.");
+        fwrite($fh, $text) or die("Could not write file!");
+        fclose($fh);
+        session()->forget($request->session);
+        //unlink($filenameget);  
         
     }
+
+  
 }

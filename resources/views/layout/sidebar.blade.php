@@ -1,6 +1,7 @@
 @section('sidebar')
     <nav class="sidebar">
         <div class="sidebar-header">
+            {{-- <img src="{{ asset('assets/images/menalco.png')}}" alt=""> --}}
         <div class="sidebar-toggler not-active">
             <span></span>
             <span></span>
