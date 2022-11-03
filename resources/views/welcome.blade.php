@@ -127,10 +127,15 @@
 
 
                 $('.dataTables_filter input').bind('paste', function(e) {
-                    var pastedData = e.originalEvent.clipboardData.getData('text');
 
+                    var pastedData = e.originalEvent.clipboardData.getData('text');
                     var table = $('.table').DataTable();
-                    var row = table.row('#row-' + pastedData).data();
+                    var row = table.row('#row-' + pastedData).data(); 
+                    var filteredData = table.column( 0 ).data()
+                                        .filter( function ( value, index ) {
+                                            return value == pastedData ? true : false;
+                                        } );
+                    if(filteredData.length == 1){
 
                     var quantite = row[5];
                     var codeBar = row[19];
@@ -173,9 +178,19 @@
 
                     });
 
+                }else{
 
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Le Code à barres est erronée',
+                    text: 'Le Code à barres est erronée!',
+                    showConfirmButton: false,
+                    timer: 1300
+                    });
+                    $('.dataTables_filter input').removeAttr('value');
+                }
                 });
-
+               
             } else {
                 Swal.fire({
                     icon: 'error',
