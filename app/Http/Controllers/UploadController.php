@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
@@ -34,8 +35,11 @@ class UploadController extends Controller
      */
     public function store(Request $request)
     {
-        $file = request()->file('CSV');
-        $file->store('toPath', ['disk' => 'my_files']);
+        $file = $request->file('CSV');
+        $fileName = $file->getClientOriginalName();
+        $file->storeAs('public/Inventaire/', $fileName);
+       
+        return back();
     }
 
     /**

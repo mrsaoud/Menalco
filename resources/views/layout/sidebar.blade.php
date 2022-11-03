@@ -15,14 +15,19 @@
 
                     <li class="nav-item">
                         <a href="#!" class="nav-link sidebar-toggler" id="link">
-                           T1
+                           select
                         </a>
-                        {{-- <a class="nav-link" id="2">
-                            T2
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="3" href="/">
+                            Scanner
                         </a>
-                        <a class="nav-link" id="3">
-                            T3
-                        </a> --}}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="2" href="{{route('upload.index')}}">
+                            Transférer
+                        </a>
                     </li>
             </li>
 

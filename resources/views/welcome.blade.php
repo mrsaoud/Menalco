@@ -61,8 +61,17 @@
     $(document).ready(function() {
         $("input#codeBar").focus();
         var pastedData = $('#codeBar').val();
+        
         if($('#codeBar').val() != null && pastedData.length == 20){
-
+            $.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) { 
+                    Swal.fire({
+                    icon: 'error',
+                    title: "La session n'existe pas",
+                    text: "La session n'existe pas",
+                    showConfirmButton: false,
+                    timer: 1300
+                    });
+                    };
                 $('#hidden').show(100);
                 var table = $('.table').DataTable({
                     "createdRow": function(row, data, dataIndex) {
@@ -113,7 +122,9 @@
                     ],
                     "initComplete": function(settings, json) {
                         $('div.dataTables_filter input', table.table().container()).focus();
-                    }
+                    },
+                    
+
                 });
 
 
@@ -184,6 +195,8 @@
         
         
         }
+
+        
         $('#codeBar').bind('paste keypress', function(e) {
             if(e.which == 13 || e.originalEvent.clipboardData!= null){
             if(e.originalEvent.clipboardData!= null){
