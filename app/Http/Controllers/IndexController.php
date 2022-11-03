@@ -18,7 +18,10 @@ class IndexController extends Controller
     public function getTable(Request $request)
     {
         $file = public_path('Inventaire/' . $request->codeBar);
-        Session::put('this', $request->codeBar);
+        if(file_exists(public_path('Inventaire/' . $request->codeBar))){
+            Session::put('this', $request->codeBar);
+        }
+        
         if (Session::get($request->codeBar)) {
             $data = Session::get($request->codeBar);
             return  DataTables::of($data)
@@ -147,4 +150,5 @@ class IndexController extends Controller
         session()->forget($request->session);
         session()->forget('this');
     }
+
 }
