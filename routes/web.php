@@ -17,6 +17,7 @@ Route::get('/','App\Http\Controllers\IndexController@index');
 Route::get('get-data','App\Http\Controllers\IndexController@getTable');
 Route::get('update-data','App\Http\Controllers\IndexController@updateTable');
 Route::get('export-data','App\Http\Controllers\IndexController@arrayToCsv');
+Route::get('clear-session','App\Http\Controllers\IndexController@clearSession');
 
 Route::resource('upload','App\Http\Controllers\UploadController');
 

@@ -151,4 +151,8 @@ class IndexController extends Controller
         session()->forget('this');
     }
 
+    function clearSession(){
+        session()->forget('this');
+    }
+
 }

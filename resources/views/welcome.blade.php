@@ -183,7 +183,15 @@
                     text: 'La session est erronée!',
                     showConfirmButton: false,
                     timer: 1300
-                })
+                });
+                $.ajax({
+                    url: '/clear-session',
+                    method: 'GET',
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                });
+
             }
         });
 
