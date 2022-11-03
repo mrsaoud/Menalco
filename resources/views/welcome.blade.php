@@ -60,8 +60,8 @@
 
     $(document).ready(function() {
         $("input#codeBar").focus();
-        $('#codeBar').bind('paste keyup', function(e) {
-
+        $('#codeBar').bind('paste keypress', function(e) {
+            if(e.which == 13 || e.originalEvent.clipboardData!= null){
             if(e.originalEvent.clipboardData!= null){
                 var pastedData = e.originalEvent.clipboardData.getData('text');
             }else{
@@ -193,7 +193,9 @@
                 });
 
             }
+        }
         });
+    
 
     });
 
