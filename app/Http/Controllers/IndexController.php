@@ -17,9 +17,9 @@ class IndexController extends Controller
     //envoyer le array à datatables (frontedn)
     public function getTable(Request $request)
     {
-        $file = public_path('storage/Inventaire/' . $request->codeBar);
+        $file = public_path('Inventaire/' . $request->codeBar);
 
-        if(file_exists(public_path('storage/Inventaire/' . $request->codeBar))){
+        if(file_exists(public_path('Inventaire/' . $request->codeBar))){
             Session::put('this', $request->codeBar);
         
         
@@ -101,7 +101,7 @@ class IndexController extends Controller
     {
 
         $i = 0;
-        $handle = fopen('storage/Inventaire/' . $request->session, "r");
+        $handle = fopen('Inventaire/' . $request->session, "r");
         $head[] = fgetcsv($handle, 1000, ",");
         $head1[] = fgetcsv($handle, 1, ",");
         $data = Session::get($request->session);
@@ -146,7 +146,7 @@ class IndexController extends Controller
             $j++;
         }
 
-        $fh = fopen('storage/Inventaire/' . $request->session, 'w');
+        $fh = fopen('Inventaire/' . $request->session, 'w');
         fwrite($fh, $text) or die("Could not write file!");
         fclose($fh);
         session()->forget($request->session);
