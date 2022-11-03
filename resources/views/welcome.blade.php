@@ -60,6 +60,130 @@
 
     $(document).ready(function() {
         $("input#codeBar").focus();
+        var pastedData = $('#codeBar').val();
+        if($('#codeBar').val() != null && pastedData.length == 20){
+
+                $('#hidden').show(100);
+                var table = $('.table').DataTable({
+                    "createdRow": function(row, data, dataIndex) {
+                        if (data[5] != 0) {
+                            $(row).css("background-color", "green");
+                            $(row).css("color", "white");
+                        } else if (data[5] == 0) {
+                            $(row).css("background-color", "red");
+                            $(row).css("color", "white");
+                        }
+                    },
+                    destroy: true,
+                    oLanguage: {
+                        "sSearch": "Code à barres",
+                    },
+                    processing: true,
+                    serverSide: false,
+                    bPaginate: false,
+                    responsive: true,
+                    autoWidth: false,
+                    lengthChange: false,
+                    pageLength: 500,
+                    order: [[2, 'desc']],
+
+                    ajax: {
+                        url: '/get-data',
+                        type: 'GET',
+                        data: function(d) {
+                            d.codeBar = pastedData
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                    },
+                    columns: [{
+                            data: 19,
+                            name: 'CodeBar'
+                        },
+                        {
+                            data: 8,
+                            name: 'Designation'
+                        },
+                        {
+                            data: 5,
+                            name: 'Quantité',
+                        },
+                    ],
+                    "initComplete": function(settings, json) {
+                        $('div.dataTables_filter input', table.table().container()).focus();
+                    }
+                });
+
+
+                $('.dataTables_filter input').bind('paste', function(e) {
+
+                    var pastedData = e.originalEvent.clipboardData.getData('text');
+                    var table = $('.table').DataTable();
+                    var row = table.row('#row-' + pastedData).data(); 
+                    var filteredData = table.column( 0 ).data()
+                                        .filter( function ( value, index ) {
+                                            return value == pastedData ? true : false;
+                                        } );
+                    if(filteredData.length == 1){
+
+                    var quantite = row[5];
+                    var codeBar = row[19];
+                    var session = $('#codeBar').val();
+                    var prices;
+                    Swal.fire({
+                        title: 'Combien d\'article?',
+                        icon: 'question',
+                        input: 'text',
+                        didOpen: () => {
+                            const inputRange = Swal.getInput()
+                            const inputNumber = Swal.getContent()
+                                .querySelector('#range-value')
+                            inputRange.addEventListener('input', () => {
+                                quantite = inputRange.value
+                            })
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: '/update-data?codeBar=' + codeBar + '&q=' + quantite + '&session=' + session,
+                                method: 'GET',
+                                headers: {
+                                    'X-CSRF-TOKEN': $(
+                                        'meta[name="csrf-token"]'
+                                    ).attr('content')
+                                },
+
+                                success: function() {
+                                    var oTable = $('.table').dataTable();
+                                    // to reload
+                                    oTable.api().ajax.reload();
+                                    $('div.dataTables_filter input', table.table().container()).focus();
+                                }
+                            });
+
+                        } else {
+                            Swal.close()
+                        }
+
+                    });
+
+                }else{
+
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Le Code à barres est erronée',
+                    text: 'Le Code à barres est erronée!',
+                    showConfirmButton: false,
+                    timer: 1300
+                    });
+                    $('.dataTables_filter input').removeAttr('value');
+                }
+                });
+        
+        
+        }
         $('#codeBar').bind('paste keypress', function(e) {
             if(e.which == 13 || e.originalEvent.clipboardData!= null){
             if(e.originalEvent.clipboardData!= null){
