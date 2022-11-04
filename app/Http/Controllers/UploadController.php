@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -37,9 +38,13 @@ class UploadController extends Controller
     {
         $file = $request->file('CSV');
         $fileName = $file->getClientOriginalName();
-        $file->storeAs('public/Inventaire/', $fileName);
-       
-        return back();
+        Storage::disk('public')->putFileAs('',$file,$fileName);
+        if(Storage::disk('public')->exists($fileName)){
+            return redirect('/')->with('message', 'le fichier est sauvegardé');
+        }else{
+            return redirect('/upload')->with('message', 'il y a eu un problème pour enregistrer votre fichier');
+        }
+        
     }
 
     /**

@@ -48,8 +48,28 @@
 @section('scripts')
 
 <script>
-    $('#hidden').hide();
 
+@if(session('message'))
+    const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+    })
+
+    Toast.fire({
+    icon: 'success',
+    title: '{{session("message")}}'
+    })
+@endif
+
+    $('#hidden').hide();
+    $("input#codeBar").focus();
     $('#link').click(function(evt) {
         $('input#codeBar').removeAttr('value');
         $("input#codeBar").focus();
@@ -59,9 +79,8 @@
 
 
     $(document).ready(function() {
-        $("input#codeBar").focus();
         var pastedData = $('#codeBar').val();
-        
+        $("input#codeBar").focus();
         if($('#codeBar').val() != null && pastedData.length == 20){
             $.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) { 
                     Swal.fire({
@@ -127,7 +146,7 @@
 
                 });
 
-
+                //article
                 $('.dataTables_filter input').bind('paste', function(e) {
 
                     var pastedData = e.originalEvent.clipboardData.getData('text');
@@ -196,8 +215,19 @@
         
         }
 
-        
+        //paste and enter only 
         $('#codeBar').bind('paste keypress', function(e) {
+            var pastedData = $('#codeBar').val();
+            $.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) { 
+                    Swal.fire({
+                    icon: 'error',
+                    title: "La session n'existe pas",
+                    text: "La session n'existe pas",
+                    showConfirmButton: false,
+                    timer: 1300
+                    });
+                    };
+                $('#hidden').show(100);
             if(e.which == 13 || e.originalEvent.clipboardData!= null){
             if(e.originalEvent.clipboardData!= null){
                 var pastedData = e.originalEvent.clipboardData.getData('text');
