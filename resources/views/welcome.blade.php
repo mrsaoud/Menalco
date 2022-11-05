@@ -70,7 +70,7 @@
 @section('scripts')
 
 <script>
-
+//afficher le message de fichier ajouter avec success appré la redirection de puis la page upload
 @if(session('message'))
     const Toast = Swal.mixin({
     toast: true,
@@ -100,6 +100,8 @@
 
 
 
+
+    //charger la datatable si il y a une valeur dans le input de session (si la session et déja sauvgarder)
     $(document).ready(function() {
         var pastedData = $('#codeBar').val();
         $("input#codeBar").focus();
@@ -113,8 +115,10 @@
                     timer: 1300
                     });
                     };
+                    //afficher la card qui contien le tableau
                 $('#hidden').show(100);
                 var table = $('.table').DataTable({
+                    //pour char row crée le script vérifier si la column quantité =0 ou !-0
                     "createdRow": function(row, data, dataIndex) {
                         if (data[5] != 0) {
                             $(row).css("background-color", "green");
@@ -124,6 +128,7 @@
                             $(row).css("color", "white");
                         }
                     },
+                    //la possibiliter de régénérer  le tableau plusieur foix
                     destroy: true,
                     oLanguage: {
                         "sSearch": "Code à barres",
@@ -168,16 +173,24 @@
 
                 });
 
-                //article
+
+
+
+
+
+                //code a barres coller dans le champe de recherche 
                 $('.dataTables_filter input').bind('paste', function(e) {
 
+                    //avoir le text coller de puis la clipboard
                     var pastedData = e.originalEvent.clipboardData.getData('text');
                     var table = $('.table').DataTable();
                     var row = table.row('#row-' + pastedData).data(); 
+                    //compare le text coller avec chaque ligne 
                     var filteredData = table.column( 0 ).data()
                                         .filter( function ( value, index ) {
                                             return value == pastedData ? true : false;
                                         } );
+                    //si true
                     if(filteredData.length == 1){
 
                     var quantite = row[5];
@@ -209,7 +222,7 @@
 
                                 success: function() {
                                     var oTable = $('.table').dataTable();
-                                    // to reload
+                                    // actualiser le tableau
                                     oTable.api().ajax.reload();
                                     $('div.dataTables_filter input', table.table().container()).focus();
                                 }
@@ -222,7 +235,7 @@
                     });
 
                 }else{
-
+                    //compare le text coller avec chaque ligne = false
                     Swal.fire({
                     icon: 'error',
                     title: 'Le Code à barres est erronée',
@@ -237,7 +250,15 @@
         
         }
 
-        //paste and enter only 
+
+
+
+
+
+
+
+
+        //charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
         $('#codeBar').bind('paste keypress', function(e) {
             var pastedData = $('#codeBar').val();
             $.fn.dataTable.ext.errMode = function ( settings, helpPage, message ) { 
@@ -313,6 +334,10 @@
                         $('div.dataTables_filter input', table.table().container()).focus();
                     }
                 });
+
+
+
+
 
 
                 $('.dataTables_filter input').bind('paste', function(e) {
@@ -403,6 +428,10 @@
 
     });
 
+
+
+
+    // sauvgarder le array et exporter comme csv
     $('.button').click(function() {
         var session = $('#codeBar').val();
                 $.ajax({
@@ -426,20 +455,8 @@
                 });
             });
 
-            $('#spnTop').on("click", function () {
-                var percentageToScroll = 89;
-                var percentage = percentageToScroll / 100;
-                var height = $(document).scrollTop();
-                var scrollAmount = height * (1 - percentage);
+            //button pour balayer vers le bas
 
-                console.log('scrollAmount: ' + scrollAmount);
-                $('html,body').animate({
-                    scrollTop: scrollAmount
-                }, 'slow', function () {
-                    console.log("reached top");
-                });
-
-            });
             $('#spnbottom').on("click", function () {
                 var percentageToScroll = 100;
                 var percentage = percentageToScroll / 100;
