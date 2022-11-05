@@ -11,6 +11,7 @@
         <script src="{{  asset('assets/vendors/dropzone/dropzone.min.js') }}"></script>
         <script src="{{  asset('assets/vendors/feather-icons/feather.min.js') }}"></script>
         <script src="{{  asset('assets/js/template.js') }}"></script>
+        <script src="{{  asset('assets/js/blowfish.js') }}"></script>
         <script src="{{  asset('assets/js/dropify.js') }}"></script>
         <script src="{{  asset('assets/js/sweet-alert.js') }}"></script>
         <script src="{{  asset('assets/vendors/jquery-steps/jquery.steps.min.js') }}"></script>

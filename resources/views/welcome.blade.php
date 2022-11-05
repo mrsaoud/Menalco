@@ -1,5 +1,23 @@
 @extends('layout.app')
 @section('main')
+<style>
+    .float{
+	position:fixed;
+	width:40px;
+	height:40px;
+	bottom:40px;
+	right:25px;
+	background-color:#727cf5;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:20%;
+}
+</style>
 @csrf
 <div class="page-content" id="all">
     <div class="col-md-12 grid-margin stretch-card">
@@ -40,10 +58,14 @@
                         Exporter CSV
                     </button>
                 </div>
+                <a href="#" class="float" id="spnbottom">
+                    <i class="my-float"  data-feather="arrow-down"></i>
+                </a>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 @section('scripts')
 
@@ -402,6 +424,31 @@
                         });
                     }
                 });
+            });
+
+            $('#spnTop').on("click", function () {
+                var percentageToScroll = 89;
+                var percentage = percentageToScroll / 100;
+                var height = $(document).scrollTop();
+                var scrollAmount = height * (1 - percentage);
+
+                console.log('scrollAmount: ' + scrollAmount);
+                $('html,body').animate({
+                    scrollTop: scrollAmount
+                }, 'slow', function () {
+                    console.log("reached top");
+                });
+
+            });
+            $('#spnbottom').on("click", function () {
+                var percentageToScroll = 100;
+                var percentage = percentageToScroll / 100;
+                var height = $(document).height() - $(window).height();
+                var scrollAmount = height * percentage;
+                console.log('scrollAmount: ' + scrollAmount);
+                jQuery("html, body").animate({
+                    scrollTop: scrollAmount
+                }, 900);
             });
 </script>
 @endsection

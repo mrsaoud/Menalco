@@ -19,18 +19,20 @@ class IndexController extends Controller
     {
         $file = public_path('Inventaire/' . $request->codeBar);
 
-        if(file_exists(public_path('Inventaire/' . $request->codeBar))){
+        if(file_exists($file)){
             Session::put('this', $request->codeBar);
-        
-        
+                
         if (Session::get($request->codeBar)) {
+
             $data = Session::get($request->codeBar);
             return  DataTables::of($data)
                 ->smart(true)
                 ->addIndexColumn()
                 ->setRowId('row-{{$data[19]}}')
                 ->toJson();
+
         } elseif ($file) {
+
             //si la session ne contien pas l'information
             $data = $this->importCsv($file);
             Session::put($request->codeBar, $data);
@@ -39,6 +41,7 @@ class IndexController extends Controller
                 ->addIndexColumn()
                 ->setRowId('row-{{$data[19]}}')
                 ->toJson();
+                
         } else {
             return back()->with('error', 'Session introvable');
         }
