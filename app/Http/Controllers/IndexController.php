@@ -4,48 +4,64 @@ namespace App\Http\Controllers;
 
 
 use DataTables;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class IndexController extends Controller
 {
     public function index()
     {
-        return view('welcome');
+        $files = Storage::disk('ftp')->allFiles('/');
+        //dd($files);
+        return view('welcome',['list'=> $files]);
     }
 
     //envoyer le array à datatables (frontedn)
     public function getTable(Request $request)
     {
+        //remote here
         $file = public_path('Inventaire/' . $request->codeBar);
-
-        if(file_exists($file)){
+        
+        if(!file_exists($file)){
+            $fileFTP = Storage::disk('ftp')->get($request->codeBar);
+            $fh = fopen('Inventaire/' . $request->codeBar, 'w');
+            fwrite($fh, $fileFTP);
             Session::put('this', $request->codeBar);
-                
-        if (Session::get($request->codeBar)) {
-
-            $data = Session::get($request->codeBar);
+            $data = $this->importCsv($file); 
+            Session::put($request->codeBar, $data);
             return  DataTables::of($data)
-                ->smart(true)
-                ->addIndexColumn()
-                ->setRowId('row-{{$data[19]}}')
-                ->toJson();
+                    ->smart(true)
+                    ->addIndexColumn()
+                    ->setRowId('row-{{$data[19]}}')
+                    ->toJson();
+
+        }elseif (Session::get($request->codeBar)) {
+
+                $data = Session::get($request->codeBar);
+                return  DataTables::of($data)
+                    ->smart(true)
+                    ->addIndexColumn()
+                    ->setRowId('row-{{$data[19]}}')
+                    ->toJson();
 
         } elseif ($file) {
 
-            //si la session ne contien pas l'information
-            $data = $this->importCsv($file);
-            Session::put($request->codeBar, $data);
-            return  DataTables::of($data)
-                ->smart(true)
-                ->addIndexColumn()
-                ->setRowId('row-{{$data[19]}}')
-                ->toJson();
-                
+                //si la session ne contien pas l'information
+                Session::put('this', $request->codeBar);
+                $data = $this->importCsv($file);
+                Session::put($request->codeBar, $data);
+                return  DataTables::of($data)
+                    ->smart(true)
+                    ->addIndexColumn()
+                    ->setRowId('row-{{$data[19]}}')
+                    ->toJson();
+                    
         } else {
-            return back()->with('error', 'Session introvable');
+                return back()->with('error', 'Session introvable');
         }
-    }
+           
     }
 
     // modifier la quantité et null 
@@ -104,6 +120,7 @@ class IndexController extends Controller
     {
 
         $i = 0;
+        //remote
         $handle = fopen('Inventaire/' . $request->session, "r");
         $head[] = fgetcsv($handle, 1000, ",");
         $head1[] = fgetcsv($handle, 1, ",");
@@ -148,10 +165,12 @@ class IndexController extends Controller
             }
             $j++;
         }
-
+        //remote
         $fh = fopen('Inventaire/' . $request->session, 'w');
         fwrite($fh, $text) or die("Could not write file!");
         fclose($fh);
+        $file_local = Storage::disk('public')->get($request->session);
+        Storage::disk('ftp')->put('validé/'.$request->session,$file_local);
         session()->forget($request->session);
         session()->forget('this');
     }

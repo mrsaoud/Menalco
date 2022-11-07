@@ -15,6 +15,7 @@
         <script src="{{  asset('assets/js/dropify.js') }}"></script>
         <script src="{{  asset('assets/js/sweet-alert.js') }}"></script>
         <script src="{{  asset('assets/vendors/jquery-steps/jquery.steps.min.js') }}"></script>
+        <script src="{{  asset('assets/vendors/select2/select2.min.js') }}"></script>
         <script src="{{  asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
         <script src="{{  asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
 

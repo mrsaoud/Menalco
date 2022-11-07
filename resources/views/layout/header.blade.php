@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/demo_1/style.min.css') }}" id="lnk">
         <link rel="stylesheet" href="{{ asset('assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
         <link rel="stylesheet" href="{{  asset('assets/vendors/dropify/dist/dropify.min.css') }}">
+        <link rel="stylesheet" href="{{  asset('assets/vendors/select2/select2.min.css') }}">
         <script src="{{ asset('assets/vendors/sweetalert2/sweetalert2.min.js') }}"></script>
         <link rel="stylesheet" href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/vendors/jquery-steps/jquery.steps.css') }}">
