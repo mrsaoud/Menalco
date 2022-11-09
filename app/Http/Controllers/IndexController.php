@@ -30,6 +30,7 @@ class IndexController extends Controller
            
             $fh = fopen('Inventaire/' . $request->codeBar, 'w');
             fwrite($fh, $fileFTP);
+            
             Session::put('this', $request->codeBar);
             $data = $this->importCsv($file); 
             Session::put($request->codeBar, $data);
