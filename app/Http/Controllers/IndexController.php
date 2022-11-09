@@ -26,7 +26,7 @@ class IndexController extends Controller
         $file = public_path('Inventaire/' . $request->codeBar);
         
         if(!file_exists($file)){
-            $fileFTP = file_get_contents('http://rapidis.ma/testinventaire/'.$request->codeBar);
+            $fileFTP = file_get_contents('http://rapidis.ma/menalco/'.$request->codeBar);
            
             $fh = fopen('Inventaire/' . $request->codeBar, 'w');
             fwrite($fh, $fileFTP);

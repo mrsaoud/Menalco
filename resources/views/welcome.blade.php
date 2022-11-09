@@ -27,10 +27,11 @@
                     <div class="">
                         <label class="form-label">Single select box using select 2</label>
                         <select class="js-example-basic-single form-select" data-width="100%">
-                            <option value="">Selectioner</option>
+                            <option value="test">test</option>
                             <option value="alcool">alcool</option>
                             <option value="tabac">tabac</option>
                             <option value="vin">vin</option>
+                            <option value="whisky">whisky</option>
                             {{-- @foreach ($list as $item)
                                 @if ($item != '.ftpquota')
                                     <option value="{{$item}}">{{$item}}</option>
