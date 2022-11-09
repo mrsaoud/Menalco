@@ -8,14 +8,15 @@ use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 class IndexController extends Controller
 {
     public function index()
     {
-        $files = Storage::disk('ftp')->allFiles('/');
+        //$files = Storage::disk('ftp')->allFiles('/');
         //dd($files);
-        return view('welcome',['list'=> $files]);
+        return view('welcome');
     }
 
     //envoyer le array à datatables (frontedn)
@@ -25,7 +26,8 @@ class IndexController extends Controller
         $file = public_path('Inventaire/' . $request->codeBar);
         
         if(!file_exists($file)){
-            $fileFTP = Storage::disk('ftp')->get($request->codeBar);
+            $fileFTP = file_get_contents('http://rapidis.ma/testinventaire/'.$request->codeBar);
+           
             $fh = fopen('Inventaire/' . $request->codeBar, 'w');
             fwrite($fh, $fileFTP);
             Session::put('this', $request->codeBar);
@@ -165,14 +167,17 @@ class IndexController extends Controller
             }
             $j++;
         }
-        //remote
-        $fh = fopen('Inventaire/' . $request->session, 'w');
-        fwrite($fh, $text) or die("Could not write file!");
-        fclose($fh);
-        $file_local = Storage::disk('public')->get($request->session);
-        Storage::disk('ftp')->put('validé/'.$request->session,$file_local);
-        session()->forget($request->session);
-        session()->forget('this');
+
+            $fh = fopen('Inventaire/' . $request->session, 'w');
+            fwrite($fh, $text) or die("Could not write file!");
+        
+            $file_local = Storage::disk('public')->get('vin');
+            
+            Storage::disk('ftp')->put('validé/'.$request->session,$file_local);
+            Http::attach('file',$file_local,$request->session)->post('http://rapidis.ma/menalco/upload.php');
+            fclose($fh);
+            session()->forget($request->session);
+            session()->forget('this');
     }
 
     function clearSession(){

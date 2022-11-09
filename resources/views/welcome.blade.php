@@ -28,11 +28,14 @@
                         <label class="form-label">Single select box using select 2</label>
                         <select class="js-example-basic-single form-select" data-width="100%">
                             <option value="">Selectioner</option>
-                            @foreach ($list as $item)
+                            <option value="alcool">alcool</option>
+                            <option value="tabac">tabac</option>
+                            <option value="vin">vin</option>
+                            {{-- @foreach ($list as $item)
                                 @if ($item != '.ftpquota')
                                     <option value="{{$item}}">{{$item}}</option>
                                 @endif
-                            @endforeach
+                            @endforeach --}}
                         </select>
                       </div>
                 </div>
@@ -134,7 +137,7 @@
                     autoWidth: false,
                     lengthChange: false,
                     pageLength: 500,
-                    order: [[2, 'desc']],
+                    // order: [[2, 'desc']],
                     ajax: {
                         url: '/get-data',
                         type: 'GET',
@@ -225,19 +228,20 @@
 	
 	                    });
 	
-	                    }
+	                    }else{
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Code a barres introuvable',
+                            text: 'Code a barres introuvable',
+                            showConfirmButton: false,
+                            timer: 1900
+                            });
+                        }
                         
                     }
                 });
             }); 
         
-    
-
-
-
-
-
-
     // sauvgarder le array et exporter comme csv
     $('.button').click(function() {
         var session = $('.js-example-basic-single').val();
