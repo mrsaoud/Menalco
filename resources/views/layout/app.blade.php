@@ -11,22 +11,8 @@
 
 
 <body class="">
-    <div id="loader"></div>
-    <div class="main-wrapper">
-
-		<!-- partial:partials/_sidebar.html -->
-		@include('layout.sidebar')
-		@yield('sidebar')
-		<!-- partial -->
 
 		<div class="page-wrapper">
-
-			<!-- partial:partials/_navbar.html -->
-			@include('layout.menu')
-			@yield('menu')
-
-			<!-- partial -->
-
 
             @yield('main')
 
@@ -36,7 +22,7 @@
 			<!-- partial -->
 
 		</div>
-	</div>
+	
 
 
 

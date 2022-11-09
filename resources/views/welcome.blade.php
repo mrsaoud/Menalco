@@ -25,7 +25,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <div class="">
-                        <label class="form-label">Single select box using select 2</label>
+                        <label class="form-label">Sélectionner une session</label>
                         <select class="js-example-basic-single form-select" data-width="100%">
                             <option value="test">test</option>
                             <option value="alcool">alcool</option>
@@ -40,39 +40,30 @@
                         </select>
                       </div>
                 </div>
+                <br>
+                <div class="table-responsive" class="row" id="hidden">
+                    <table id="dataTableExample" class="table" >
+                        <thead>
+                            <tr>
+                                <th class="text-truncate" style="max-width: 10px;">Code Barres</th>
+                                <th class="text-truncate" style="max-width: 10px;">Designation</th>
+                                <th class="text-truncate" style="max-width: 10px;">Quantité</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row" id="hidden">
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-head d-flex p-2 justify-content-center">
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive pl-2">
-                        <table id="dataTableExample" class="table">
-                            <thead>
-                                <tr>
-                                    <th class="text-truncate" style="max-width: 50px;">Code Barres</th>
-                                    <th class="text-truncate" style="max-width: 50px;">Designation</th>
-                                    <th class="text-truncate" style="max-width: 50px;">Quantité</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="card-footer d-flex p-2 justify-content-center">
-                    <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0 button">
-                        <i class="btn-icon-prepend" data-feather="download-cloud"></i>
-                        Exporter CSV
-                    </button>
-                </div>
-                <a href="#" class="float" id="spnbottom">
-                    <i class="my-float"  data-feather="arrow-down"></i>
-                </a>
+            <div class="card-footer d-flex p-2 justify-content-center">
+                <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0 button">
+                    <i class="btn-icon-prepend" data-feather="download-cloud"></i>
+                    Exporter CSV
+                </button>
             </div>
+            <a href="#" class="float" id="spnbottom">
+                <i class="my-float"  data-feather="arrow-down"></i>
+            </a>
         </div>
     </div>
 </div>

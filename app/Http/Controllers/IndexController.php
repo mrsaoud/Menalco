@@ -178,6 +178,7 @@ class IndexController extends Controller
             fclose($fh);
             session()->forget($request->session);
             session()->forget('this');
+            unlink('Inventaire/' . $request->session);
     }
 
     function clearSession(){
