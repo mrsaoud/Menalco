@@ -160,7 +160,7 @@
                 });
                
 
-                $('.dataTables_filter input').bind('paste keypress', function(e) {
+                $('.dataTables_filter input').bind('keypress', function(e) {
 
                     if (e.which == 13 || e.originalEvent.clipboardData!= null) {
                         if(e.originalEvent.clipboardData!= null){
@@ -206,11 +206,10 @@
 	
 	                                success: function() {
 	                                    var oTable = $('.table').dataTable();
-	                                    // to reload
-	                                    oTable.api().ajax.reload();
-                                        	
-                                        $('input[type=search]').val('').change();
+	                                    // to reload	
+                                        table.search('').draw();
 	                                    $('div.dataTables_filter input', table.table().container()).focus();
+                                        oTable.api().ajax.reload();
 	                                }
 	                            });
 	
@@ -274,5 +273,29 @@
                 }, 900);
             });
           
+            window.addEventListener("load", () => {
+                function handleNetworkChange(event) {
+                    if (navigator.onLine) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'vous êtes en ligne',
+                            text: 'vous êtes en ligne',
+                            showConfirmButton: false,
+                            timer: 1500
+                            });
+                    } else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'vous êtes hors-ligne',
+                            text: 'vous êtes hors-ligne',
+                            showConfirmButton: false,
+                            timer: 1500
+                            });
+                    }
+                }
+                window.addEventListener("online", handleNetworkChange);
+                window.addEventListener("offline", handleNetworkChange);
+            });
+
 </script>
 @endsection
