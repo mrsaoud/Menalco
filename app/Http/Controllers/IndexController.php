@@ -172,7 +172,7 @@ class IndexController extends Controller
             $fh = fopen('Inventaire/' . $request->session, 'w');
             fwrite($fh, $text) or die("Could not write file!");
         
-            $file_local = Storage::disk('public')->get('vin');
+            $file_local = Storage::disk('public')->get($request->session);
             //Storage::disk('ftp')->put('validé/'.$request->session,$file_local);
             Http::attach('file',$file_local,$request->session)->post('http://rapidis.ma/menalco/upload.php');
             fclose($fh);
