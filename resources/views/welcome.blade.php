@@ -53,9 +53,8 @@
                         <tbody>
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <div class="card-footer d-flex p-2 justify-content-center">
+                
+                 <div class="d-flex p-2 justify-content-center">
                 <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0 button">
                     <i class="btn-icon-prepend" data-feather="download-cloud"></i>
                     Exporter CSV
@@ -64,6 +63,9 @@
             <a href="#" class="float" id="spnbottom">
                 <i class="my-float"  data-feather="arrow-down"></i>
             </a>
+        </div>
+            </div>
+           
         </div>
     </div>
 </div>
