@@ -283,7 +283,7 @@
                             title: 'vous êtes en ligne',
                             text: 'vous êtes en ligne',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 900
                             });
                     } else {
                         Swal.fire({
@@ -291,7 +291,7 @@
                             title: 'vous êtes hors-ligne',
                             text: 'vous êtes hors-ligne',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 2000
                             });
                     }
                 }
