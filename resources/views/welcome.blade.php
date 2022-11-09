@@ -75,36 +75,9 @@
 
 <script>
 //afficher le message de fichier ajouter avec success appré la redirection de puis la page upload
-@if(session('message'))
-    const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-    })
-
-    Toast.fire({
-    icon: 'success',
-    title: '{{session("message")}}'
-    })
-@endif
-
     $('#hidden').hide();
-    $("input#codeBar").focus();
-    $('#link').click(function(evt) {
-        $('input#codeBar').removeAttr('value');
-        $("input#codeBar").focus();
-        evt.preventDefault();
-    });
-
-    if ($(".js-example-basic-single").length) {
-                $(".js-example-basic-single").select2();
-            }
+     $(".js-example-basic-single").select2();
+       
 
         //charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
         $('.js-example-basic-single').on('select2:select', function (e) {
@@ -234,6 +207,140 @@
                     }
                 });
             }); 
+
+
+//charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
+    @if(!empty(Session::get('this')))
+            $('.js-example-basic-single').val(["{{Session::get('this')}}","{{Session::get('this')}}"]).change();
+            $('#hidden').show();
+            var pastedData = "{{Session::get('this')}}";
+                var table = $('.table').DataTable({
+                    "createdRow": function(row, data, dataIndex) {
+                        if (data[5] != 0) {
+                            $(row).css("background-color", "green");
+                            $(row).css("color", "white");
+                        } else if (data[5] == 0) {
+                            $(row).css("background-color", "red");
+                            $(row).css("color", "white");
+                        }
+                    },
+                    destroy: true,
+                    oLanguage: {
+                        "sSearch": "Code à barres",
+                    },
+                    processing: true,
+                    serverSide: false,
+                    bPaginate: false,
+                    responsive: true,
+                    autoWidth: false,
+                    lengthChange: false,
+                    pageLength: 500,
+                    // order: [[2, 'desc']],
+                    ajax: {
+                        url: '/get-data',
+                        type: 'GET',
+                        data: function(d) {
+                            d.codeBar = pastedData
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                    },
+                    columns: [{
+                            data: 19,
+                            name: 'CodeBar'
+                        },
+                        {
+                            data: 8,
+                            name: 'Designation'
+                        },
+                        {
+                            data: 5,
+                            name: 'Quantité',
+                        },
+                    ],
+                    "initComplete": function(settings, json) {
+                        $('div.dataTables_filter input', table.table().container()).focus();
+                    }
+                });
+               
+
+                $('.dataTables_filter input').bind('keypress', function(e) {
+
+                    if (e.which == 13 || e.originalEvent.clipboardData!= null) {
+                        if(e.originalEvent.clipboardData!= null){
+                            var pastedData = e.originalEvent.clipboardData.getData('text');
+                        }else{
+                            var pastedData = $('.dataTables_filter input').val();
+                        }
+
+	                    var table = $('.table').DataTable();
+	                    var row = table.row('#row-' + pastedData).data(); 
+	                    var filteredData = table.column( 0 ).data()
+	                                        .filter( function ( value, index ) {
+	                                            return value == pastedData ? true : false;
+	                                        } );
+	                    if(filteredData.length == 1){
+	
+	                    var quantite = row[5];
+	                    var codeBar = row[19];
+	                     var session = $('.js-example-basic-single').val();
+	                    var prices;
+	                    Swal.fire({
+	                        title: 'Combien d\'article?',
+	                        icon: 'question',
+	                        input: 'text',
+	                        didOpen: () => {
+	                            const inputRange = Swal.getInput()
+	                            const inputNumber = Swal.getContent()
+	                                .querySelector('#range-value')
+	                            inputRange.addEventListener('input', () => {
+	                                quantite = inputRange.value
+	                            })
+	                        }
+	                    }).then((result) => {
+	                        if (result.isConfirmed) {
+	                            $.ajax({
+	                                url: '/update-data?codeBar=' + codeBar + '&q=' + quantite + '&session=' + session,
+	                                method: 'GET',
+	                                headers: {
+	                                    'X-CSRF-TOKEN': $(
+	                                        'meta[name="csrf-token"]'
+	                                    ).attr('content')
+	                                },
+	
+	                                success: function() {
+	                                    var oTable = $('.table').dataTable();
+	                                    // to reload	
+                                        table.search('').draw();
+	                                    $('div.dataTables_filter input', table.table().container()).focus();
+                                        oTable.api().ajax.reload();
+	                                }
+	                            });
+	
+	                        } else {
+	                            Swal.close()
+	                        }
+	
+	                    });
+	
+	                    }else{
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Code a barres introuvable',
+                            text: 'Code a barres introuvable',
+                            showConfirmButton: false,
+                            timer: 1900
+                            });
+                        }
+                        
+                    }
+                });
+    @endif
+
+
+
         
     // sauvgarder le array et exporter comme csv
     $('.button').click(function() {
