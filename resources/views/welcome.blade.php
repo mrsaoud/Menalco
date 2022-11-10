@@ -208,9 +208,10 @@
 	                                success: function() {
 	                                    var oTable = $('.table').dataTable();
 	                                    // to reload	
-                                        table2.search('').draw();
+                                        
 	                                    $('div.dataTables_filter input', table2.table().container()).focus();
                                         oTable.api().ajax.reload();
+                                        table2.search('').draw();
 	                                }
 	                            });
 	
@@ -353,11 +354,13 @@
 	                                },
 	
 	                                success: function() {
+                                        table2.search('').draw();
 	                                    var oTable = $('.table').dataTable();
 	                                    // to reload	
                                         table2.search('').draw();
-	                                    $('div.dataTables_filter input', table.table().container()).focus();
+	                                    $('div.dataTables_filter input', table2.table().container()).focus();
                                         oTable.api().ajax.reload();
+                                        table2.search('').draw();
 	                                }
 	                            });
 	
@@ -380,6 +383,7 @@
                                         table2.search('').draw();
 	                                    $('div.dataTables_filter input', table.table().container()).focus();
                                         oTable.api().ajax.reload();
+                                        table2.search('').draw();
                         }
                         
                     }
