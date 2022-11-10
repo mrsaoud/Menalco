@@ -32,6 +32,7 @@
                             <option value="alcool">alcool</option>
                             <option value="tabac">tabac</option>
                             <option value="vin">vin</option>
+                            <option value="whisky">whisky</option>
                             <option value="biere">biere</option>
                             <option value="champane">champane</option>
                             <option value="alimentation">alimentation</option>
