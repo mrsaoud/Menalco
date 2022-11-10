@@ -218,7 +218,7 @@
 //charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
     @if(!empty(Session::get('this')))
             
-            $('.js-example-basic-single').val(["{{Session::get('this')}}","{{Session::get('this')}}".toUpperCase()]).change();
+            $('.js-example-basic-single').val(["{{Session::get('this')}}","{{Session::get('this')}}"]).change();
             $('#hidden').show();
             var pastedData = "{{Session::get('this')}}";
                 var table = $('.table').DataTable({
