@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('main')
 <style>
+
     .float{
 	position:fixed;
 	width:40px;
@@ -12,7 +13,7 @@
 	border-radius:50px;
 	text-align:center;
 	box-shadow: 2px 2px 3px #999;
-}
+    }
 
 .my-float{
 	margin-top:20%;
@@ -27,11 +28,15 @@
                     <div class="">
                         <label class="form-label">Sélectionner une session</label>
                         <select class="js-example-basic-single form-select" data-width="100%">
-                            <option value="test">test</option>
-                            <option value="alcool">alcool</option>
-                            <option value="tabac">tabac</option>
-                            <option value="vin">vin</option>
-                            <option value="whisky">whisky</option>
+                            <option value="test">TEST</option>
+                            <option value="alcool">ALCOOL</option>
+                            <option value="tabac">TABAC</option>
+                            <option value="vin">VIN</option>
+                            <option value="whisky">BIERE</option>
+                            <option value="whisky">CHAMPANE</option>
+                            <option value="whisky">ALIMENTATION</option>
+                            <option value="whisky">VODKA</option>
+
                             {{-- @foreach ($list as $item)
                                 @if ($item != '.ftpquota')
                                     <option value="{{$item}}">{{$item}}</option>
@@ -82,7 +87,8 @@
         //charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
         $('.js-example-basic-single').on('select2:select', function (e) {
             $('#hidden').show();
-            var pastedData = e.params.data.text;
+
+            var pastedData = e.params.data.id;
                 var table = $('.table').DataTable({
                     "createdRow": function(row, data, dataIndex) {
                         if (data[5] != 0) {
@@ -263,8 +269,14 @@
                     "initComplete": function(settings, json) {
                         $('div.dataTables_filter input', table.table().container()).focus();
                     }
+                    
                 });
-               
+                $.fn.dataTable.ext.errMode = 'none';
+
+                $('.table').on('error.dt', function(e, settings, techNote, message) {
+                    Swal.fire({icon: 'error',title: 'La session est introuvable',text: 'la session est introuvable',showConfirmButton: false,timer: 1900});
+                })
+                
 
                 $('.dataTables_filter input').bind('keypress', function(e) {
 
@@ -376,7 +388,6 @@
                 var percentage = percentageToScroll / 100;
                 var height = $(document).height() - $(window).height();
                 var scrollAmount = height * percentage;
-                console.log('scrollAmount: ' + scrollAmount);
                 jQuery("html, body").animate({
                     scrollTop: scrollAmount
                 }, 900);
