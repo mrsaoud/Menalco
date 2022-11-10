@@ -28,14 +28,14 @@
                     <div class="">
                         <label class="form-label">Sélectionner une session</label>
                         <select class="js-example-basic-single form-select" data-width="100%">
-                            <option value="test">TEST</option>
-                            <option value="alcool">ALCOOL</option>
-                            <option value="tabac">TABAC</option>
-                            <option value="vin">VIN</option>
-                            <option value="biere">BIERE</option>
-                            <option value="champane">CHAMPANE</option>
-                            <option value="alimentation">ALIMENTATION</option>
-                            <option value="vodka">VODKA</option>
+                            <option value="test">test</option>
+                            <option value="alcool">alcool</option>
+                            <option value="tabac">tabac</option>
+                            <option value="vin">vin</option>
+                            <option value="biere">biere</option>
+                            <option value="champane">champane</option>
+                            <option value="alimentation">alimentation</option>
+                            <option value="vodka">vodka</option>
 
                             {{-- @foreach ($list as $item)
                                 @if ($item != '.ftpquota')
@@ -217,7 +217,8 @@
 
 //charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
     @if(!empty(Session::get('this')))
-            $('.js-example-basic-single').val(["{{Session::get('this')}}","{{Session::get('this')}}"]).change();
+            
+            $('.js-example-basic-single').val(["{{Session::get('this')}}","{{Session::get('this')}}".toUpperCase()]).change();
             $('#hidden').show();
             var pastedData = "{{Session::get('this')}}";
                 var table = $('.table').DataTable({
