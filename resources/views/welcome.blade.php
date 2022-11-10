@@ -35,20 +35,21 @@
                             <option value="whisky">whisky</option>
                             <option value="biere">biere</option>
                             <option value="champane">champagne</option>
+                            <option value="vodka">vodka</option>
                             <option value="alimentation">alimentation</option>
-                            <option value="vodka">vins-rouge</option>
-                            <option value="vodka">apperitif</option>
-                            <option value="vodka">gin</option>
-                            <option value="vodka">pastis</option>
-                            <option value="vodka">bier-du-monde</option>
-                            <option value="vodka">cognac-&-brandy </option>
-                            <option value="vodka">vins-rose</option>
-                            <option value="vodka">vins-blanc</option>
-                            <option value="vodka">vins-gris</option>
-                            <option value="vodka">vins-du-monde</option>
-                            <option value="vodka">boissons soft</option>
-                            <option value="vodka">epicerie</option>
-                            <option value="vodka">bier-du-maroc</option>
+                            <option value="vins-rouge">vins-rouge</option>
+                            <option value="apperitif">apperitif</option>
+                            <option value="gin">gin</option>
+                            <option value="pastis">pastis</option>
+                            <option value="bier-du-monde">bier-du-monde</option>
+                            <option value="cognac-&-brandy">cognac-&-brandy</option>
+                            <option value="vins-rose">vins-rose</option>
+                            <option value="vins-blanc">vins-blanc</option>
+                            <option value="vins-gris">vins-gris</option>
+                            <option value="vins-du-monde">vins-du-monde</option>
+                            <option value="boissons-soft">boissons-soft</option>
+                            <option value="epicerie">epicerie</option>
+                            <option value="bier-du-maroc">bier-du-maroc</option>
 
 
                             {{-- @foreach ($list as $item)
@@ -200,10 +201,9 @@
 	                                },
 	
 	                                success: function() {
-	                                    var oTable = $('.table').dataTable();
-	                                    // to reload	
                                         table.search('').draw();
 	                                    $('div.dataTables_filter input', table.table().container()).focus();
+	                                    var oTable = $('.table').dataTable();
                                         oTable.api().ajax.reload();
 	                                }
 	                            });
@@ -222,10 +222,9 @@
                             showConfirmButton: false,
                             timer: 1900
                             });
-                            var oTable = $('.table').dataTable();
-	                                    // to reload	
-                                        table.search('').draw();
+                            table.search('').draw();
 	                                    $('div.dataTables_filter input', table.table().container()).focus();
+	                                    var oTable = $('.table').dataTable();
                                         oTable.api().ajax.reload();
                         }
                         
@@ -343,10 +342,9 @@
 	                                },
 	
 	                                success: function() {
-	                                    var oTable = $('.table').dataTable();
-	                                    // to reload	
                                         table.search('').draw();
 	                                    $('div.dataTables_filter input', table.table().container()).focus();
+	                                    var oTable = $('.table').dataTable();
                                         oTable.api().ajax.reload();
 	                                }
 	                            });
@@ -365,11 +363,10 @@
                             showConfirmButton: false,
                             timer: 1900
                             });
-                            var oTable = $('.table').dataTable();
-	                                    // to reload	
-                                        table.search('').draw();
-	                                    $('div.dataTables_filter input', table.table().container()).focus();
-                                        oTable.api().ajax.reload();
+                            table.search('').draw();
+	                        $('div.dataTables_filter input', table.table().container()).focus();
+	                        var oTable = $('.table').dataTable();
+                            oTable.api().ajax.reload();
                         }
                         
                     }
