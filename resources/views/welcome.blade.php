@@ -154,7 +154,12 @@
                         $('div.dataTables_filter input', table.table().container()).focus();
                     }
                 });
-               
+                
+                $.fn.dataTable.ext.errMode = 'none';
+
+                    $('.table').on('error.dt', function(e, settings, techNote, message) {
+                    Swal.fire({icon: 'error',title: 'La session est introuvable',text: 'la session est introuvable',showConfirmButton: false,timer: 1900});
+                     })
 
                 $('.dataTables_filter input').bind('keypress', function(e) {
 
@@ -165,9 +170,9 @@
                             var pastedData = $('.dataTables_filter input').val();
                         }
 
-	                    var table = $('.table').DataTable();
-	                    var row = table.row('#row-' + pastedData).data(); 
-	                    var filteredData = table.column( 0 ).data()
+	                    var table2 = $('.table').DataTable();
+	                    var row = table2.row('#row-' + pastedData).data(); 
+	                    var filteredData = table2.column( 0 ).data()
 	                                        .filter( function ( value, index ) {
 	                                            return value == pastedData ? true : false;
 	                                        } );
@@ -201,9 +206,10 @@
 	                                },
 	
 	                                success: function() {
-                                        table.search('').draw();
-	                                    $('div.dataTables_filter input', table.table().container()).focus();
 	                                    var oTable = $('.table').dataTable();
+	                                    // to reload	
+                                        table2.search('').draw();
+	                                    $('div.dataTables_filter input', table2.table().container()).focus();
                                         oTable.api().ajax.reload();
 	                                }
 	                            });
@@ -215,6 +221,11 @@
 	                    });
 	
 	                    }else{
+                             // to reload	
+                           
+	                        $('div.dataTables_filter input', table.table().container()).focus();
+
+
                             Swal.fire({
                             icon: 'error',
                             title: 'Code a barres introuvable',
@@ -222,15 +233,15 @@
                             showConfirmButton: false,
                             timer: 1900
                             });
-                            //table.search('').draw();
-	                        $('div.dataTables_filter input', table.table().container()).focus();
-	                        var oTable = $('.table').dataTable();
-                            oTable.api().ajax.reload();
+                            table2.search('').draw();
                         }
                         
                     }
                 });
             }); 
+
+
+
 
 
 //charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
@@ -306,9 +317,9 @@
                             var pastedData = $('.dataTables_filter input').val();
                         }
 
-	                    var table = $('.table').DataTable();
-	                    var row = table.row('#row-' + pastedData).data(); 
-	                    var filteredData = table.column( 0 ).data()
+	                    var table2 = $('.table').DataTable();
+	                    var row = table2.row('#row-' + pastedData).data(); 
+	                    var filteredData = table2.column( 0 ).data()
 	                                        .filter( function ( value, index ) {
 	                                            return value == pastedData ? true : false;
 	                                        } );
@@ -342,9 +353,10 @@
 	                                },
 	
 	                                success: function() {
-                                        table.search('').draw();
-	                                    $('div.dataTables_filter input', table.table().container()).focus();
 	                                    var oTable = $('.table').dataTable();
+	                                    // to reload	
+                                        table2.search('').draw();
+	                                    $('div.dataTables_filter input', table.table().container()).focus();
                                         oTable.api().ajax.reload();
 	                                }
 	                            });
@@ -363,10 +375,11 @@
                             showConfirmButton: false,
                             timer: 1900
                             });
-                            //table.search('').draw();
-	                        $('div.dataTables_filter input', table.table().container()).focus();
-	                        var oTable = $('.table').dataTable();
-                            oTable.api().ajax.reload();
+                            var oTable = $('.table').dataTable();
+	                                    // to reload	
+                                        table2.search('').draw();
+	                                    $('div.dataTables_filter input', table.table().container()).focus();
+                                        oTable.api().ajax.reload();
                         }
                         
                     }
@@ -396,7 +409,6 @@
                         showConfirmButton: false,
                         timer: 1900
                         });
-                        location.reload();
                     }
                 });
             });
