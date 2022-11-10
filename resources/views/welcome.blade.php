@@ -32,10 +32,10 @@
                             <option value="alcool">ALCOOL</option>
                             <option value="tabac">TABAC</option>
                             <option value="vin">VIN</option>
-                            <option value="whisky">BIERE</option>
-                            <option value="whisky">CHAMPANE</option>
-                            <option value="whisky">ALIMENTATION</option>
-                            <option value="whisky">VODKA</option>
+                            <option value="biere">BIERE</option>
+                            <option value="champane">CHAMPANE</option>
+                            <option value="alimentation">ALIMENTATION</option>
+                            <option value="vodka">VODKA</option>
 
                             {{-- @foreach ($list as $item)
                                 @if ($item != '.ftpquota')
