@@ -34,9 +34,22 @@
                             <option value="vin">vin</option>
                             <option value="whisky">whisky</option>
                             <option value="biere">biere</option>
-                            <option value="champane">champane</option>
+                            <option value="champane">champagne</option>
                             <option value="alimentation">alimentation</option>
-                            <option value="vodka">vodka</option>
+                            <option value="vodka">vins-rouge</option>
+                            <option value="vodka">apperitif</option>
+                            <option value="vodka">gin</option>
+                            <option value="vodka">pastis</option>
+                            <option value="vodka">bier-du-monde</option>
+                            <option value="vodka">cognac-&-brandy </option>
+                            <option value="vodka">vins-rose</option>
+                            <option value="vodka">vins-blanc</option>
+                            <option value="vodka">vins-gris</option>
+                            <option value="vodka">vins-du-monde</option>
+                            <option value="vodka">boissons soft</option>
+                            <option value="vodka">epicerie</option>
+                            <option value="vodka">bier-du-maroc</option>
+
 
                             {{-- @foreach ($list as $item)
                                 @if ($item != '.ftpquota')
@@ -209,6 +222,11 @@
                             showConfirmButton: false,
                             timer: 1900
                             });
+                            var oTable = $('.table').dataTable();
+	                                    // to reload	
+                                        table.search('').draw();
+	                                    $('div.dataTables_filter input', table.table().container()).focus();
+                                        oTable.api().ajax.reload();
                         }
                         
                     }
@@ -347,6 +365,11 @@
                             showConfirmButton: false,
                             timer: 1900
                             });
+                            var oTable = $('.table').dataTable();
+	                                    // to reload	
+                                        table.search('').draw();
+	                                    $('div.dataTables_filter input', table.table().container()).focus();
+                                        oTable.api().ajax.reload();
                         }
                         
                     }
