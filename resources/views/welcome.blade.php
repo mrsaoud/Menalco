@@ -360,12 +360,13 @@
                                         table2.search('').draw();
 	                                    $('div.dataTables_filter input', table2.table().container()).focus();
                                         oTable.api().ajax.reload();
-                                        table2.search('').draw();
+                                        
 	                                }
 	                            });
 	
 	                        } else {
-	                            Swal.close()
+	                            Swal.close();
+                                table2.search('').draw();
 	                        }
 	
 	                    });
@@ -378,11 +379,10 @@
                             showConfirmButton: false,
                             timer: 1900
                             });
-                            var oTable = $('.table').dataTable();
+                          
 	                                    // to reload	
                                         table2.search('').draw();
 	                                    $('div.dataTables_filter input', table.table().container()).focus();
-                                        oTable.api().ajax.reload();
                                         table2.search('').draw();
                         }
                         
@@ -413,6 +413,7 @@
                         showConfirmButton: false,
                         timer: 1900
                         });
+                        window.reload();
                     }
                 });
             });
