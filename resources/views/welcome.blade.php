@@ -222,10 +222,10 @@
                             showConfirmButton: false,
                             timer: 1900
                             });
-                            table.search('').draw();
-	                                    $('div.dataTables_filter input', table.table().container()).focus();
-	                                    var oTable = $('.table').dataTable();
-                                        oTable.api().ajax.reload();
+                            //table.search('').draw();
+	                        $('div.dataTables_filter input', table.table().container()).focus();
+	                        var oTable = $('.table').dataTable();
+                            oTable.api().ajax.reload();
                         }
                         
                     }
@@ -363,7 +363,7 @@
                             showConfirmButton: false,
                             timer: 1900
                             });
-                            table.search('').draw();
+                            //table.search('').draw();
 	                        $('div.dataTables_filter input', table.table().container()).focus();
 	                        var oTable = $('.table').dataTable();
                             oTable.api().ajax.reload();
@@ -396,6 +396,7 @@
                         showConfirmButton: false,
                         timer: 1900
                         });
+                        location.reload();
                     }
                 });
             });
