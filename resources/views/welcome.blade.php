@@ -318,9 +318,9 @@
                             var pastedData = $('.dataTables_filter input').val();
                         }
 
-	                    var table2 = $('.table').DataTable();
-	                    var row = table2.row('#row-' + pastedData).data(); 
-	                    var filteredData = table2.column( 0 ).data()
+	                    var table = $('.table').DataTable();
+	                    var row = table.row('#row-' + pastedData).data(); 
+	                    var filteredData = table.column( 0 ).data()
 	                                        .filter( function ( value, index ) {
 	                                            return value == pastedData ? true : false;
 	                                        } );
@@ -354,19 +354,18 @@
 	                                },
 	
 	                                success: function() {
-                                        table2.search('').draw();
-	                                    var oTable = $('.table').dataTable();
+                                        table.search('').draw();
+	                                    var table3 = $('.table').dataTable();
 	                                    // to reload	
-                                        table2.search('').draw();
-	                                    $('div.dataTables_filter input', table2.table().container()).focus();
-                                        oTable.api().ajax.reload();
-                                        
+                                        table.search('').draw();
+	                                    $('div.dataTables_filter input', table.table().container()).focus();
+                                        table3.api().ajax.reload();
 	                                }
 	                            });
 	
 	                        } else {
 	                            Swal.close();
-                                table2.search('').draw();
+                                table.search('').draw();
 	                        }
 	
 	                    });
@@ -380,10 +379,10 @@
                             timer: 1900
                             });
                           
-	                                    // to reload	
-                                        table2.search('').draw();
-	                                    $('div.dataTables_filter input', table.table().container()).focus();
-                                        table2.search('').draw();
+	                            // to reload	
+                                table2.search('').draw();
+	                            $('div.dataTables_filter input', table.table().container()).focus();
+                                table2.search('').draw();
                         }
                         
                     }
