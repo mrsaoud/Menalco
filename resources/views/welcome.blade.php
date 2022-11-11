@@ -149,9 +149,10 @@
 
                     },columns: [
                         {
-                        className: 'dt-control',
-                        orderable: false,
-                        data: null,
+                            "className":      'dt-control',
+                            "orderable":      false,
+                            "data":           null,
+                            "defaultContent": ''
                         },
                         {
                             data: 8,
