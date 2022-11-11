@@ -15,10 +15,22 @@
 	box-shadow: 2px 2px 3px #999;
     }
 
-.my-float{
-	margin-top:20%;
-}
+    .my-float{
+        margin-top:20%;
+    }
+
+    table.dataTable td {
+    font-size: 1.2em;
+    }
+
+    td.dt-control.sorting_1{
+        padding: 0!important;
+        width: 5px!important;
+    }
+   
+
 </style>
+
 @csrf
 <div class="page-content" id="all">
     <div class="col-md-12 grid-margin stretch-card">
@@ -28,35 +40,11 @@
                     <div class="">
                         <label class="form-label">Sélectionner une session</label>
                         <select class="js-example-basic-single form-select" data-width="100%">
-                            <option value="test">test</option>
-                            <option value="alcool">alcool</option>
-                            <option value="tabac">tabac</option>
-                            <option value="vin">vin</option>
-                            <option value="whisky">whisky</option>
-                            <option value="biere">biere</option>
-                            <option value="champane">champagne</option>
-                            <option value="vodka">vodka</option>
-                            <option value="alimentation">alimentation</option>
-                            <option value="vins-rouge">vins-rouge</option>
-                            <option value="apperitif">apperitif</option>
-                            <option value="gin">gin</option>
-                            <option value="pastis">pastis</option>
-                            <option value="bier-du-monde">bier-du-monde</option>
-                            <option value="cognac-&-brandy">cognac-&-brandy</option>
-                            <option value="vins-rose">vins-rose</option>
-                            <option value="vins-blanc">vins-blanc</option>
-                            <option value="vins-gris">vins-gris</option>
-                            <option value="vins-du-monde">vins-du-monde</option>
-                            <option value="boissons-soft">boissons-soft</option>
-                            <option value="epicerie">epicerie</option>
-                            <option value="bier-du-maroc">bier-du-maroc</option>
-
-
-                            {{-- @foreach ($list as $item)
-                                @if ($item != '.ftpquota')
+                            @foreach ($names as $item)
+                                @if ($item != '.ftpquota' && $item != 'error_log' && $item != 'list.php' && $item != 'upload.php' )
                                     <option value="{{$item}}">{{$item}}</option>
                                 @endif
-                            @endforeach --}}
+                            @endforeach
                         </select>
                       </div>
                 </div>
@@ -65,13 +53,16 @@
                     <table id="dataTableExample" class="table" >
                         <thead>
                             <tr>
-                                <th class="text-truncate" style="max-width: 10px;">Code Barres</th>
+                                <th style="max-width: 10px!important;"></th>
                                 <th class="text-truncate" style="max-width: 10px;">Designation</th>
-                                <th class="text-truncate" style="max-width: 10px;">Quantité</th>
                             </tr>
                         </thead>
-                        <tbody>
-                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th class="text-truncate" style="max-width: 10px;">Designation</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 
                  <div class="d-flex p-2 justify-content-center">
@@ -97,7 +88,27 @@
 //afficher le message de fichier ajouter avec success appré la redirection de puis la page upload
     $('#hidden').hide();
      $(".js-example-basic-single").select2();
-       
+     function format(d) {
+            // `d` is the original data object for the row
+            return (
+                '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                '<tr>' +
+                '<td>CodeBar:</td>' +
+                '<td>' +
+                d[19] +
+                '</td>' +
+                '</tr>' +
+                '<tr>' +
+                '<td>Quantité:</td>' +
+                '<td>' +
+                d[5] +
+                '</td>' +
+                '</tr>' +
+                '</table>'
+            );
+        }
+
+        $(document).ready(function () {
 
         //charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
         $('.js-example-basic-single').on('select2:select', function (e) {
@@ -125,7 +136,7 @@
                     autoWidth: false,
                     lengthChange: false,
                     pageLength: 500,
-                    // order: [[2, 'desc']],
+                    order: [[0, 'desc']],
                     ajax: {
                         url: '/get-data',
                         type: 'GET',
@@ -136,23 +147,37 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
 
-                    },
-                    columns: [{
-                            data: 19,
-                            name: 'CodeBar'
+                    },columns: [
+                        {
+                        className: 'dt-control',
+                        orderable: false,
+                        data: null,
                         },
                         {
                             data: 8,
                             name: 'Designation'
                         },
-                        {
-                            data: 5,
-                            name: 'Quantité',
-                        },
+                        
                     ],
                     "initComplete": function(settings, json) {
                         $('div.dataTables_filter input', table.table().container()).focus();
                     }
+                });
+
+                        // Add event listener for opening and closing details
+                    $('.table tbody').on('click', 'td.dt-control', function () {
+                        var tr = $(this).closest('tr');
+                        var row = table.row(tr);
+                        if (row.child.isShown()) {
+                            // This row is already open - close it
+                            row.child.hide();
+                            tr.removeClass('shown');
+                        } else {
+                            // Open this row
+                            row.child(format(row.data())).show();
+                            tr.addClass('shown');
+                        }
+                    });
                 });
                 
                 $.fn.dataTable.ext.errMode = 'none';
@@ -244,7 +269,6 @@
 
 
 
-
 //charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
     @if(!empty(Session::get('this')))
             
@@ -283,25 +307,41 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
 
-                    },
-                    columns: [{
-                            data: 19,
-                            name: 'CodeBar'
+                    },columns: [
+                        {
+                            "className":      'dt-control',
+                            "orderable":      false,
+                            "data":           null,
+                            "defaultContent": ''
                         },
                         {
                             data: 8,
                             name: 'Designation'
                         },
-                        {
-                            data: 5,
-                            name: 'Quantité',
-                        },
+                        
                     ],
                     "initComplete": function(settings, json) {
                         $('div.dataTables_filter input', table.table().container()).focus();
                     }
                     
                 });
+
+                     // Add event listener for opening and closing details
+                     $('.table tbody').on('click', 'td.dt-control', function () {
+                        var tr = $(this).closest('tr');
+                        var row = table.row(tr);
+                        if (row.child.isShown()) {
+                            // This row is already open - close it
+                            row.child.hide();
+                            tr.removeClass('shown');
+                        } else {
+                            // Open this row
+                            row.child(format(row.data())).show();
+                            tr.addClass('shown');
+                        }
+                    });
+
+                    
                 $.fn.dataTable.ext.errMode = 'none';
 
                 $('.table').on('error.dt', function(e, settings, techNote, message) {

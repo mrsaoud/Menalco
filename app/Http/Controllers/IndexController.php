@@ -14,9 +14,8 @@ class IndexController extends Controller
 {
     public function index()
     {
-        //$files = Storage::disk('ftp')->allFiles('/');
-        //dd($files);
-        return view('welcome');
+        $response = Http::get('http://rapidis.ma/menalco/list.php');
+        return view('welcome',["names"=>json_decode($response)]);
     }
 
     //envoyer le array à datatables (frontedn)
