@@ -381,9 +381,9 @@
                             });
                           
 	                            // to reload	
-                                table2.search('').draw();
+                                table.search('').draw();
 	                            $('div.dataTables_filter input', table.table().container()).focus();
-                                table2.search('').draw();
+                                table.search('').draw();
                         }
                         
                     }
