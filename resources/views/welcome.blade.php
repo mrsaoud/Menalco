@@ -358,6 +358,7 @@
 	                                    var table3 = $('.table').dataTable();
 	                                    // to reload	
                                         table.search('').draw();
+                                        $('input[type=search]').val('');
 	                                    $('div.dataTables_filter input', table.table().container()).focus();
                                         table3.api().ajax.reload();
 	                                }
