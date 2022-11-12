@@ -28,6 +28,9 @@
         padding: 0!important;
         width: 5px!important;
     }
+    .dataTables_filter input{
+        max-width: 85%!important;
+    }
    
 
 </style>
