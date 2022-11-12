@@ -117,7 +117,7 @@
         //charger la datatable si une valeur correct et coller ou une valeur ecrit aprés entrée
         $('.js-example-basic-single').on('select2:select', function (e) {
             $('#hidden').show();
-
+            $(".js-example-basic-single").prop("disabled", true);
             var pastedData = e.params.data.id;
             
                 var table = $('.table').DataTable({
