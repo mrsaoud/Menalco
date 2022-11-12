@@ -527,7 +527,7 @@
                         showConfirmButton: false,
                         timer: 1900
                         });
-                        window.reload();
+                        document.location.reload(true);         
                     }
                 });
             });
