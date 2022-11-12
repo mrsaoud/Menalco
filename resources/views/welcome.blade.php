@@ -20,7 +20,7 @@
     }
 
     table.dataTable td {
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: 700;
     }
 
@@ -59,13 +59,13 @@
                         <thead>
                             <tr>
                                 <th style="max-width: 10px!important;"></th>
-                                <th class="text-truncate" style="max-width: 10px;">CodeBar </th>
+                                <th class="text-truncate" style="max-width: 10px;">Code Barre </th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th></th>
-                                <th class="text-truncate" style="max-width: 10px;">CodeBar </th>
+                                <th class="text-truncate" style="max-width: 10px;">Code Barre </th>
                             </tr>
                         </tfoot>
                     </table>
@@ -113,7 +113,7 @@
             );
         }
 
-       
+        $('.dataTables_filter input').attr("placeholder", "Code a barre");
     // Array to track the ids of the details displayed rows
     var detailRows = [];
 
@@ -135,7 +135,7 @@
                     },
                     destroy: true,
                     oLanguage: {
-                        "sSearch": "CB",
+                        "sSearch": "",
                     },
                     processing: true,
                     serverSide: false,
