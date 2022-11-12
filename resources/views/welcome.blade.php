@@ -29,7 +29,7 @@
         width: 5px!important;
     }
     .dataTables_filter input{
-        max-width: 85%!important;
+        max-width: 70%!important;
     }
    
 
@@ -135,7 +135,7 @@
                     },
                     destroy: true,
                     oLanguage: {
-                        "sSearch": "Code à barres",
+                        "sSearch": "CB",
                     },
                     processing: true,
                     serverSide: false,
