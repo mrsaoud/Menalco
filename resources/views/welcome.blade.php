@@ -73,7 +73,7 @@
                  <div class="d-flex p-2 justify-content-center">
                 <button type="button" class="btn btn-primary btn-icon-text mb-2 mb-md-0 button">
                     <i class="btn-icon-prepend" data-feather="download-cloud"></i>
-                    Exporter CSV
+                    VALIDÉ
                 </button>
             </div>
             <a href="#" class="float" id="spnbottom">
