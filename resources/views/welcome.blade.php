@@ -122,6 +122,8 @@
             $('#hidden').show();
             $(".js-example-basic-single").prop("disabled", true);
             var pastedData = e.params.data.id;
+             var name = pastedData.replace(/%20/g, " ");
+             console.log(name);
             
                 var table = $('.table').DataTable({
                     "createdRow": function(row, data, dataIndex) {
@@ -149,7 +151,7 @@
                         url: '/get-data',
                         type: 'GET',
                         data: function(d) {
-                            d.codeBar = pastedData
+                            d.codeBar = name
                         },
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
