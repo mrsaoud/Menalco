@@ -515,26 +515,31 @@
     // sauvgarder le array et exporter comme csv
     $('.button').click(function() {
         var session = $('.js-example-basic-single').val();
-                $.ajax({
+
+        Swal.fire({
+        title: 'Souhaitez-vous enregistrer les modifications ?',
+        showDenyButton: true,
+        confirmButtonText: 'Sauvegarder',
+        denyButtonText: `Annuler`,
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.ajax({
                     url: '/export-data?session='+ session,
                     method: 'GET',
                     headers: {
                         'X-CSRF-TOKEN': $(
                             'meta[name="csrf-token"]'
                         ).attr('content')
-                    },
-
-                    success: function() {
-                        Swal.fire({
-                        icon: 'success',
-                        title: 'Les données sont validée',
-                        text: 'Les données sont validée!',
-                        showConfirmButton: false,
-                        timer: 1900
-                        });
-                        document.location.reload(true);         
                     }
                 });
+            Swal.fire('Les données sont validée!', '', 'success')
+        } else if (result.isDenied) {
+            Swal.fire('Les données ne sont pas validées', '', 'info')
+        }
+        })
+       
+                
             });
 
             
