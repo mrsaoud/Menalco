@@ -533,7 +533,8 @@
                         ).attr('content')
                     }
                 });
-            Swal.fire('Les données sont validée!', '', 'success')
+            Swal.fire('Les données sont validée!', '', 'success');
+            document.location.reload(true); 
         } else if (result.isDenied) {
             Swal.fire('Les données ne sont pas validées', '', 'info')
         }
