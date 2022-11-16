@@ -29,7 +29,13 @@
         width: 5px!important;
     }
     .dataTables_filter input{
-        max-width: 85%!important;
+        max-width: 100%!important;
+        margin-left: 40%!important;
+
+    }
+    .dataTables_filter {
+        margin: auto;
+        display: block;
     }
    
 
@@ -484,7 +490,9 @@
         var session = $('.js-example-basic-single').val();
 
         Swal.fire({
-        title: 'Souhaitez-vous enregistrer les modifications ?',
+        title: 'Souhaitez-vous continue ?',
+        text: 'Si vous cliquez sur Sauvegarder les fichiers seront supprimés! êtes-vous sûr',
+        icon: 'question',
         showDenyButton: true,
         confirmButtonText: 'Sauvegarder',
         denyButtonText: `Annuler`,
