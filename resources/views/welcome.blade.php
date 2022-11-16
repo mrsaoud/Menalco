@@ -36,6 +36,14 @@
 </style>
 
 @csrf
+<!-- **********************************************************************************************
+         ███████        ██      ██       ███████        ████████        ███     ████████
+        ██      █       ██      ██      ██     ██       ██      █       ███     ██      ██
+        ██              ██████████      █████████       █████████       ███     ██████████
+        ██    ███       ██      ██      ██     ██       ██      █       ███     ██      ██
+        ██      █       ██      ██      ██     ██       ██      █       ███     ██      ██
+         ███████        ██      ██      ██     ██       ██      █       ███     █████████ 
+********************************************************************************************** --> 
 <div class="page-content" id="all">
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card">
@@ -128,10 +136,10 @@
                 var table = $('.table').DataTable({
                     "createdRow": function(row, data, dataIndex) {
                         if (data[5] != 0) {
-                            $(row).css("background-color", "green");
+                            $(row).css("background-color", "#50c878");
                             $(row).css("color", "white");
                         } else if (data[5] == 0) {
-                            $(row).css("background-color", "red");
+                            $(row).css("background-color", "#b92e34");
                             $(row).css("color", "white");
                         }
                     },
@@ -300,39 +308,6 @@
               
                
             });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // $(document).ready(function () { 
                      
@@ -503,15 +478,7 @@
 //                         }
 //     });
 // });
-
-
-
-
-
-
    
-
-        
     // sauvgarder le array et exporter comme csv
     $('.button').click(function() {
         var session = $('.js-example-basic-single').val();
